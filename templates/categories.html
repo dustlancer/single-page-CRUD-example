@@ -5,38 +5,30 @@
 
 <div class="row p-2">
     <div class="col">
-        <h1 class="mt-1">List</h1>
+        <h1 class="mt-1">Categories</h1>
     </div>
 
     <!-- Button trigger modal для кнопки "Add" -->
     <div class="col mt-2">
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addItem">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addCategory">
             Add
         </button>
     </div>
         
         <!-- Modal для кнопки "Add" -->
-        <div class="modal fade" id="addItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add element</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add category</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
                 <div class="modal-body">
                     <!-- "Add" form -->
-                    <form action="/" method="post" class="form-contact">
-                        <input type="text" name="item" class="form-control" placeholder="new item">
-
-                            <label for="exampleFormControlSelect1" class="mt-2">Select category:</label>
-                            <select class="form-control" id="exampleFormControlSelect1", name="category">
-                                {% for i in categories %}
-                                    <option>{{i.name}}</option>
-                                {% endfor %}
-                            </select>
-
+                    <form action="/categories" method="post" class="form-contact">
+                        <input type="text" name="category" class="form-control" placeholder="new category">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary mt">Submit</button>
@@ -58,34 +50,32 @@
 <thead>
     <tr>
     <th scope="col">id</th>
-    <th scope="col">Item</th>
-    <th scope="col">Category</th>
-    <th scope="col">edit </th>
+    <th scope="col">Name</th>
+    <th scope="col">Actions </th>
     </tr>
 </thead>
 <tbody>
-    {% for i in items %}
+    {% for i in categories %}
         <tr>
             <td class="pt-3">{{ i.id }}</td>
             <td class="pt-3">{{ i.name }}</td>
-            <td class="pt-3">{{ i.category }}</td>
             <td>
 
                 <!-- Button trigger modal для кнопки "edit" -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editItem{{i.id}}">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editCategory{{i.id}}">
                     edit
                 </button>
                 <!-- Кнопка "delete" -->
                 <button type="button" class="btn btn-danger">
-                <a href="/delete_item/{{i.id}}">
+                <a href="/delete_category/{{i.id}}">
                     delete
                 </a>
                 </button>
                 
 
 
-                <!-- Modal editItem для кнопки "edit" -->
-                <div class="modal fade" id="editItem{{i.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <!-- Modal editCategory для кнопки "edit" -->
+                <div class="modal fade" id="editCategory{{i.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -96,21 +86,8 @@
                         </div>
                         <div class="modal-body">
                             <!-- Edit form-->
-                            <form action="/edit_item/{{ i.id }}" method="post" class="form-contact">
+                            <form action="/edit_category/{{ i.id }}" method="post" class="form-contact">
                                 <input type="text" name="new_name" class="form-control" value="{{ i.name }}" >
-
-                                    <label for="exampleFormControlSelect1" class="mt-2">Select category:</label>
-                                    <select class="form-control" id="exampleFormControlSelect1", name="new_category">
-                                        {% for j in categories %}
-                                            {% if j.name == i.category %}
-                                                <option selected>{{j.name}}</option>
-                                            {% else %}
-                                                <option>{{j.name}}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-
-
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary mt">Submit</button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
